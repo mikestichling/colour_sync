@@ -29,6 +29,10 @@ namespace dotnet_signalr
         {
             // Add framework services.
             services.AddMvc();
+            services.AddSignalR(options =>
+            {
+                options.Hubs.EnableDetailedErrors = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,6 +42,9 @@ namespace dotnet_signalr
             loggerFactory.AddDebug();
 
             app.UseMvc();
+            app.UseStaticFiles();
+            app.UseWebSockets();
+            app.UseSignalR();
         }
     }
 }
