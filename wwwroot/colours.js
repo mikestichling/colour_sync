@@ -35,5 +35,5 @@ $("#leave").click(function () {
 
 $.connection.hub.logging = true;
 $.connection.hub.start().done(function () {
-    
+    $("#users").append('<li>Connected</li>');
 });
