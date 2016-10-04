@@ -22,8 +22,11 @@ $("#leave").click(function () {
     document.getElementById("users").innerHTML = "Left!";
 });
 
-
 $.connection.hub.logging = true;
 $.connection.hub.start().done(function () {
     $("#status").append('Connected');
 });
+
+window.onbeforeunload = function (e) {
+    $.connection.hub.stop();
+};
