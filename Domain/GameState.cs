@@ -13,6 +13,34 @@ namespace ColourSync.Domain
             this.Tables = new List<Table>();
         }
 
+        public void JoinTable(string table, string player, Guid id)
+        {
+            if (!Tables.Any(t => t.Name == table))
+            {
+                this.AddTable(table);
+                Tables.Single(t => t.Name == table).AddPlayer(new Player(player, id));
+            }
+            else if (Tables.Single(t => t.Name == table).Players.Any(p => p.Id == id))
+            {
+                Tables.Single(t => t.Name == table).Players.Single(p => p.Id == id).Name = player;
+            }
+            else
+            {
+                Tables.Single(t => t.Name == table).AddPlayer(new Player(player, id));
+            }
+            
+        }
+
+        public void LeaveTable(string table, Guid id)
+        {
+            if (!Tables.Any(t => t.Name == table))
+            {
+                return;
+            }
+
+            Tables.Single(t => t.Name == table).RemovePlayer(id);
+        }
+
         public void AddTable(string name)
         {
             this.AddTable(new Table(name));

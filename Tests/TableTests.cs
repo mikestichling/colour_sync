@@ -47,7 +47,7 @@ namespace ColourSync.Tests {
         {
             var table = new Table("abcd");
 
-            table.AddPlayer(new Player("bob"));
+            table.AddPlayer(new Player("bob", Guid.NewGuid()));
            
             Assert.IsNotEmpty(table.Players);
             Assert.AreEqual("bob", table.Players[0].Name);
@@ -56,10 +56,11 @@ namespace ColourSync.Tests {
         [Test]
         public void GivenANewTable_WhenRemovingAPlayerByName_ItShouldRemoveThemFromThePlayersList()
         {
+            var id = Guid.NewGuid();
             var table = new Table("abcd");
-            table.AddPlayer(new Player("bob"));
+            table.AddPlayer(new Player("bob", id));
             
-            table.RemovePlayer("bob");
+            table.RemovePlayer(id);
            
             Assert.IsEmpty(table.Players);
         }
@@ -68,8 +69,8 @@ namespace ColourSync.Tests {
         public void GivenANewTable_WhenRemovingAPlayerByNameThatDoesntExist_ItShouldThrowAnException()
         {
             var table = new Table("abcd");
-            table.AddPlayer(new Player("bob"));
-            Assert.That(() => { table.RemovePlayer("Does not exist"); }, Throws.InvalidOperationException);
+            table.AddPlayer(new Player("bob", Guid.NewGuid()));
+            Assert.That(() => { table.RemovePlayer(Guid.NewGuid()); }, Throws.InvalidOperationException);
         }
 
         [Test]
@@ -95,8 +96,8 @@ namespace ColourSync.Tests {
         public void GivenANewTable_WhenAdvancingToTheNextRound_ItShouldOnlyAdvanceIfAllPlayersHaveMadeAMoveForThatRound()
         {
             var table = new Table("abcd");
-            table.AddPlayer(new Player("bob"));
-            table.AddPlayer(new Player("bob2"));
+            table.AddPlayer(new Player("bob", Guid.NewGuid()));
+            table.AddPlayer(new Player("bob2", Guid.NewGuid()));
             table.StartGame();
             Assert.That(() => { table.NextRound();}, Throws.InvalidOperationException);
         }
@@ -105,8 +106,8 @@ namespace ColourSync.Tests {
         public void GivenANewTable_WhenAdvancingToTheNextRound_ItShouldAdvanceIfAllPlayersHaveMadeAMoveForThatRound()
         {
             var table = new Table("abcd");
-            table.AddPlayer(new Player("bob"));
-            table.AddPlayer(new Player("bob2"));
+            table.AddPlayer(new Player("bob", Guid.NewGuid()));
+            table.AddPlayer(new Player("bob2", Guid.NewGuid()));
             table.Players[0].MakeMove(Moves.Blue, DateTime.Now);
             table.Players[1].MakeMove(Moves.Blue, DateTime.Now);
             table.StartGame();
@@ -118,8 +119,8 @@ namespace ColourSync.Tests {
         public void GivenANewTable_WhenCheckingHowManyPlayersStillNeedToMakeAMoveWhenNoneHaveMadeAMove_ItShouldReturnTwo()
         {
             var table = new Table("abcd");
-            table.AddPlayer(new Player("bob"));
-            table.AddPlayer(new Player("bob2"));
+            table.AddPlayer(new Player("bob", Guid.NewGuid()));
+            table.AddPlayer(new Player("bob2", Guid.NewGuid()));
             
             table.StartGame();
             Assert.AreEqual(2, table.PlayersNeedingToMove);
@@ -129,8 +130,8 @@ namespace ColourSync.Tests {
         public void GivenANewTable_WhenCheckingHowManyPlayersStillNeedToMakeAMoveWhenAllHaveMadeAMove_ItShouldReturnZero()
         {
             var table = new Table("abcd");
-            table.AddPlayer(new Player("bob"));
-            table.AddPlayer(new Player("bob2"));
+            table.AddPlayer(new Player("bob", Guid.NewGuid()));
+            table.AddPlayer(new Player("bob2", Guid.NewGuid()));
             
             table.StartGame();
 
@@ -152,12 +153,12 @@ namespace ColourSync.Tests {
         public void GivenATableWithSixPlayers_WhenFindingTheSlowestPlayer_ItShouldReturnJane()
         {
             var table = new Table("ABCD");
-            table.AddPlayer(new Player("Player1"));
-            table.AddPlayer(new Player("Player2"));
-            table.AddPlayer(new Player("Player3"));
-            table.AddPlayer(new Player("Player4"));
-            table.AddPlayer(new Player("Player5"));
-            table.AddPlayer(new Player("Jane"));
+            table.AddPlayer(new Player("Player1", Guid.NewGuid()));
+            table.AddPlayer(new Player("Player2", Guid.NewGuid()));
+            table.AddPlayer(new Player("Player3", Guid.NewGuid()));
+            table.AddPlayer(new Player("Player4", Guid.NewGuid()));
+            table.AddPlayer(new Player("Player5", Guid.NewGuid()));
+            table.AddPlayer(new Player("Jane", Guid.NewGuid()));
 
             table.StartGame();
 
@@ -175,12 +176,12 @@ namespace ColourSync.Tests {
         public void GivenATableWithSixPlayers_WhenFindingThePlayersThatPickedTheMostPickedColour_ItShouldReturnBobJaneAndJohn()
         {
             var table = new Table("ABCD");
-            table.AddPlayer(new Player("Player1"));
-            table.AddPlayer(new Player("Player2"));
-            table.AddPlayer(new Player("Player3"));
-            table.AddPlayer(new Player("John"));
-            table.AddPlayer(new Player("Bob"));
-            table.AddPlayer(new Player("Jane"));
+            table.AddPlayer(new Player("Player1", Guid.NewGuid()));
+            table.AddPlayer(new Player("Player2", Guid.NewGuid()));
+            table.AddPlayer(new Player("Player3", Guid.NewGuid()));
+            table.AddPlayer(new Player("John", Guid.NewGuid()));
+            table.AddPlayer(new Player("Bob", Guid.NewGuid()));
+            table.AddPlayer(new Player("Jane", Guid.NewGuid()));
 
             table.StartGame();
 
@@ -201,12 +202,12 @@ namespace ColourSync.Tests {
         public void GivenATableWithSixPlayers_WhenFindingThePlayersThatPickedTheMostPickedColourAndThereIsATie_ItShouldReturnBobJaneJohnAndJake()
         {
             var table = new Table("ABCD");
-            table.AddPlayer(new Player("Player1"));
-            table.AddPlayer(new Player("Player2"));
-            table.AddPlayer(new Player("Jake"));
-            table.AddPlayer(new Player("John"));
-            table.AddPlayer(new Player("Bob"));
-            table.AddPlayer(new Player("Jane"));
+            table.AddPlayer(new Player("Player1", Guid.NewGuid()));
+            table.AddPlayer(new Player("Player2", Guid.NewGuid()));
+            table.AddPlayer(new Player("Jake", Guid.NewGuid()));
+            table.AddPlayer(new Player("John", Guid.NewGuid()));
+            table.AddPlayer(new Player("Bob", Guid.NewGuid()));
+            table.AddPlayer(new Player("Jane", Guid.NewGuid()));
 
             table.StartGame();
 
@@ -228,12 +229,12 @@ namespace ColourSync.Tests {
         public void GivenATableWithSixPlayers_WhenFindingTheSinglePlayerThatPickedTheJoker_ItShouldReturnBobJaneJohnJakeAndBilly()
         {
             var table = new Table("ABCD");
-            table.AddPlayer(new Player("Player1"));
-            table.AddPlayer(new Player("Billy"));
-            table.AddPlayer(new Player("Jake"));
-            table.AddPlayer(new Player("John"));
-            table.AddPlayer(new Player("Bob"));
-            table.AddPlayer(new Player("Jane"));
+            table.AddPlayer(new Player("Player1", Guid.NewGuid()));
+            table.AddPlayer(new Player("Billy", Guid.NewGuid()));
+            table.AddPlayer(new Player("Jake", Guid.NewGuid()));
+            table.AddPlayer(new Player("John", Guid.NewGuid()));
+            table.AddPlayer(new Player("Bob", Guid.NewGuid()));
+            table.AddPlayer(new Player("Jane", Guid.NewGuid()));
 
             table.StartGame();
 
@@ -256,12 +257,12 @@ namespace ColourSync.Tests {
         public void GivenATableWithSixPlayers_WhenFindingTheTwoOrMorePlayersThatPickedTheJoker_ItShouldReturnBobJaneJohn()
         {
             var table = new Table("ABCD");
-            table.AddPlayer(new Player("Player1"));
-            table.AddPlayer(new Player("Player2"));
-            table.AddPlayer(new Player("Player3"));
-            table.AddPlayer(new Player("John"));
-            table.AddPlayer(new Player("Bob"));
-            table.AddPlayer(new Player("Jane"));
+            table.AddPlayer(new Player("Player1", Guid.NewGuid()));
+            table.AddPlayer(new Player("Player2", Guid.NewGuid()));
+            table.AddPlayer(new Player("Player3", Guid.NewGuid()));
+            table.AddPlayer(new Player("John", Guid.NewGuid()));
+            table.AddPlayer(new Player("Bob", Guid.NewGuid()));
+            table.AddPlayer(new Player("Jane", Guid.NewGuid()));
 
             table.StartGame();
 

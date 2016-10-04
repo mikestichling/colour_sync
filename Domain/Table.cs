@@ -38,9 +38,9 @@ namespace ColourSync.Domain
             this.Players.Add(player);
         }
 
-        public void RemovePlayer(string name)
+        public void RemovePlayer(Guid id)
         {
-            var thisPlayer = this.Players.Single(p => p.Name == name);
+            var thisPlayer = this.Players.Single(p => p.Id == id);
 
             this.Players.Remove(thisPlayer);
         }
