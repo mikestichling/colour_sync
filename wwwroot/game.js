@@ -8,16 +8,18 @@ game.client.updateUsers = function (users) {
     {
         $("#users").append('<li>' + users[i].Name + '</li>');
     }
+    $("#tableName").val(tableName);
+    $("#userName").val(userName);
 };
 
 $("#join").click(function () {
-    tableName = $("#tableName").val();
-    userName = $("#userName").val();
+    tableName = $("#tableName").val().toLowerCase();
+    userName = $("#userName").val().toLowerCase();
     game.server.joinTable(tableName, userName);
 });
 
 $("#leave").click(function () {
-    tableName = $("#tableName").val();
+    tableName = $("#tableName").val().toLowerCase();
     game.server.leaveTable(tableName);
     document.getElementById("users").innerHTML = "Left!";
 });
