@@ -20,7 +20,7 @@ namespace ColourSync.Domain
 
         internal void MakeMove(Moves chosenMove, DateTime timestamp)
         {
-            var move = new Move(chosenMove, timestamp, this);
+            var move = new Move(chosenMove, timestamp, new Player(this.Name, this.Id));
             Moves.Add(move);
         }
     }

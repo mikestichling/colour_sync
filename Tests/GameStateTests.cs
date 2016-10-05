@@ -49,11 +49,12 @@ namespace ColourSync.Tests {
         public void GivenANewGameStateWithATableAndPlayers_WhenMakingAMoveForAPlayer_ItShouldSaveThatState()
         {
             var state = new GameState();
+            var id = Guid.NewGuid();
             state.AddTable("abcd");
-            state.Tables[0].AddPlayer(new Player("bob", Guid.NewGuid()));
+            state.Tables[0].AddPlayer(new Player("bob", id));
             var timestamp = DateTime.Now;
 
-            state.MakeMoveForPlayer("abcd", "bob", Moves.Blue, timestamp);
+            state.MakeMoveForPlayer("abcd", id, Moves.Blue, timestamp);
 
             Assert.AreEqual(timestamp, state.Tables[0].Players[0].Moves[0].Timestamp);
             Assert.AreEqual(Moves.Blue, state.Tables[0].Players[0].Moves[0].ChosenMove);

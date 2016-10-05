@@ -9,18 +9,89 @@
         .userListDiv{
             float: right;
         }
+
+        .controls{
+            padding-top:5px;
+            padding-bottom:5px;
+        }
+
+        .colour{
+            height:100px;
+            width:100px;
+            margin:5px;
+        }
+
+        .colour-row{
+            float:left;
+        }
+
+        .red{
+            background-color: red;
+        }
+
+        .blue{
+            background-color: blue;
+        }
+
+        .green{
+            background-color: green;
+        }
+
+        .yellow{
+            background-color: yellow;
+        }
+
     </style>
 
-    TableName: <input type="text" id="tableName" />
-    Username: <input type="text" id="userName" />
+    <div class="controls">
+        <label> TableName: </label> <input type="text" id="tableName" />
+    </div>
+    <div class="controls">
+        <label> Username: </label> <input type="text" id="userName" />
+    </div>
     
-    
-    <input type="button" id="join" value="Join" />
-    <input type="button" id="leave" value="Leave" />
+    <div class="controls">
+        <input type="button" id="join" value="Join" />
+        <input type="button" id="leave" value="Leave" />
+    </div>
 
-    <label id="status"></label>
-    
-    <ul id="users"></ul>
+    <div class="controls">
+        <label id="status"></label>
+    </div>
+
+    <div class="controls">
+        <ul id="users"></ul>
+    </div>
+
+    <div class="controls">
+        <input disabled type="button" id="start" value="Start"/>
+        <input disabled type="button" id="next" value="Next Round"/>
+    </div>
+
+     <div class="controls">
+        <label id="gameStatus"></label>
+    </div>
+
+    <div class="controls">
+        <label id="serverMessages"></label>
+    </div>
+
+
+    <div class="colours">
+        <div class="colour-row"> 
+            <div class="colour red"></div>
+            <div class="colour blue"></div>
+        </div>
+
+        <div class="colour-row"> 
+            <div class="colour green"></div>
+            <div class="colour yellow"></div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <ul id="drinkers"></ul>
+    </div>
 
     <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.0.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/signalr/jquery.signalr-2.2.1.min.js"></script>

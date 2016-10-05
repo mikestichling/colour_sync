@@ -57,10 +57,10 @@ namespace ColourSync.Domain
             Tables.Remove(thisTable);
         }
 
-        public void MakeMoveForPlayer(string onTable, string playerName, Moves move, DateTime timestamp)
+        public void MakeMoveForPlayer(string onTable, Guid id, Moves move, DateTime timestamp)
         {
             var table = Tables.Single(t => t.Name == onTable);
-            var player = table.Players.Single(p => p.Name == playerName);
+            var player = table.Players.Single(p => p.Id == id);
             player.MakeMove(move, timestamp);
         }
 
