@@ -29,6 +29,25 @@ $.connection.hub.start().done(function () {
     $("#status").append('Connected');
 });
 
+$.connection.hub.connectionSlow(function() {
+    $("#status").append(' Connection Slow');
+});
+
+$.connection.hub.reconnecting(function() {
+    $("#status").append(' Reconnecting');
+});
+
+$.connection.hub.reconnected(function() {
+     $("#status").append(' Reconnected :)');
+});
+
+$.connection.hub.disconnected(function() {
+   //setTimeout(function() {
+   //    $.connection.hub.start();
+   //}, 5000); // Restart connection after 5 seconds.
+   $("#status").append(' Disconnected :(');
+});
+
 window.onbeforeunload = function (e) {
     $.connection.hub.stop();
 };
