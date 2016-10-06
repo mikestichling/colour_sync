@@ -19,6 +19,7 @@ game.client.updateServerMessage = function(number){
 };
 
 game.client.updateTimer = function (count) {
+    $(".drinkers").hide();  
     document.getElementById("gameStatus").innerHTML = "Starting in " + (4 - count);
 };
 
