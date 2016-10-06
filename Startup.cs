@@ -42,6 +42,7 @@ namespace dotnet_signalr
             loggerFactory.AddDebug();
 
             app.UseMvc();
+            app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseWebSockets();
             app.UseSignalR();
