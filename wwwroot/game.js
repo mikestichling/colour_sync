@@ -50,7 +50,7 @@ game.client.gameComplete = function(jokerLoosers, loosers, slowestPlayer){
             }
         }
 
-        $("#drinkers").append('<li>' + slowestPlayer.Name + '</li>');
+        $("#drinkers").append('<li>' + slowestPlayer.Name + ' (slowest) </li>');
     }
     $("#next").removeAttr("disabled");
 };
