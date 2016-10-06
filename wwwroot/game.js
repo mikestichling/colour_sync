@@ -25,12 +25,13 @@ game.client.updateTimer = function (count) {
 game.client.startGame = function(){
     document.getElementById("drinkers").innerHTML = "";
     document.getElementById("gameStatus").innerHTML = "Pick colour!";
-    $(".colours").show();  
+    $(".colours").show();
 };
 
 game.client.gameComplete = function(jokerLoosers, loosers, slowestPlayer){
     document.getElementById("drinkers").innerHTML = "";
     document.getElementById("serverMessages").innerHTML = "";
+    $(".drinkers").show();  
     if (jokerLoosers.length > 0)
     {
         for(var i = 0; i < jokerLoosers.length; i++)
@@ -42,7 +43,10 @@ game.client.gameComplete = function(jokerLoosers, loosers, slowestPlayer){
     {
         for(var i = 0; i < loosers.length; i++)
         {
-            $("#drinkers").append('<li>' + loosers[i].Name + '</li>');
+            if (slowestPlayer.Id != loosers[i].Id)
+            {
+                $("#drinkers").append('<li>' + loosers[i].Name + '</li>');
+            }
         }
 
         $("#drinkers").append('<li>' + slowestPlayer.Name + '</li>');
@@ -64,11 +68,13 @@ $(".colour").click(function () {
 });
 
 $("#start").click(function () {
+    $(".drinkers").hide();  
     $("#start").attr("disabled", "disabled");
     game.server.startGame(tableName);
 });
 
 $("#next").click(function () {
+    $(".drinkers").hide();
     document.getElementById("drinkers").innerHTML = "";
     $("#next").attr("disabled", "disabled");
     game.server.nextRound(tableName);
@@ -114,3 +120,4 @@ window.onbeforeunload = function (e) {
 };
 
 $(".colours").hide();
+$(".drinkers").hide();
