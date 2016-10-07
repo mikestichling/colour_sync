@@ -12,6 +12,14 @@ namespace ColourSync.Domain
             this.Player = player;
         }
 
+        public string ChosenMoveString 
+        {
+            get
+            {
+                return ChosenMove.ToString();
+            }
+        }
+
         public Moves ChosenMove {get; private set;}
         public DateTime Timestamp {get; private set;}
 

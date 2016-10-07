@@ -42,15 +42,20 @@ game.client.gameComplete = function(jokerLoosers, loosers, slowestPlayer){
     }
     else if (loosers.length > 0)
     {
+        var announceSlowestPlayer = true;
         for(var i = 0; i < loosers.length; i++)
         {
             if (slowestPlayer.Id != loosers[i].Id)
             {
-                $("#drinkers").append('<li>' + loosers[i].Name + '</li>');
+                announceSlowestPlayer = false;    
             }
-        }
 
-        $("#drinkers").append('<li>' + slowestPlayer.Name + ' (slowest) </li>');
+            $("#drinkers").append('<li>' + loosers[i].Name + ' (picked: ' + loosers[i].Move.ChosenMoveString + ' )</li>');
+        }
+        if (announceSlowestPlayer)
+        {
+            $("#drinkers").append('<li>' + slowestPlayer.Name + ' (slowest) </li>');
+        }
     }
     $("#next").removeAttr("disabled");
 };
@@ -58,6 +63,7 @@ game.client.gameComplete = function(jokerLoosers, loosers, slowestPlayer){
 $("#join").click(function () {
     tableName = $("#tableName").val().toLowerCase();
     userName = $("#userName").val().toLowerCase();
+    $(".game-buttons").show();
     game.server.joinTable(tableName, userName);
 });
 
@@ -71,11 +77,13 @@ $(".colour").click(function () {
 $("#start").click(function () {
     $(".drinkers").hide();  
     $("#start").attr("disabled", "disabled");
+    $(".colours").hide();
     game.server.startGame(tableName);
 });
 
 $("#next").click(function () {
     $(".drinkers").hide();
+    $(".colours").hide();
     document.getElementById("drinkers").innerHTML = "";
     $("#next").attr("disabled", "disabled");
     game.server.nextRound(tableName);
@@ -83,9 +91,10 @@ $("#next").click(function () {
 
 $("#leave").click(function () {
     tableName = $("#tableName").val().toLowerCase();
-    game.server.leaveTable(tableName);
+    $(".game-buttons").hide();
     document.getElementById("users").innerHTML = "Left!";
     $("#start").attr("disabled", "disabled");
+    game.server.leaveTable(tableName); 
 });
 
 $.connection.hub.logging = true;
@@ -120,5 +129,4 @@ window.onbeforeunload = function (e) {
     $.connection.hub.stop();
 };
 
-$(".colours").hide();
-$(".drinkers").hide();
+$(".hidden-at-start").hide();

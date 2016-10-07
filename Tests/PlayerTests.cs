@@ -20,7 +20,7 @@ namespace ColourSync.Tests {
         {
             var player = new Player("bob", Guid.NewGuid());
 
-            Assert.IsEmpty(player.Moves);
+            Assert.IsNull(player.Move);
         }
 
         [Test]
@@ -46,8 +46,8 @@ namespace ColourSync.Tests {
             var player = new Player("bob", Guid.NewGuid());
             var timestamp = DateTime.Now;
             player.MakeMove(Moves.Blue, timestamp);
-            Assert.AreEqual(Moves.Blue, player.Moves[0].ChosenMove);
-            Assert.AreEqual(timestamp, player.Moves[0].Timestamp);
+            Assert.AreEqual(Moves.Blue, player.Move.ChosenMove);
+            Assert.AreEqual(timestamp, player.Move.Timestamp);
         }
     }
 }

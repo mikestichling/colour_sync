@@ -3,6 +3,7 @@
 <head>
     <title>Colour Sync</title>
 	<meta charset="utf-8" />
+    <meta name=viewport content="width=device-width, initial-scale=1">
 </head>
 <body>
     <style type="text/css">
@@ -13,16 +14,23 @@
         .controls{
             padding-top:5px;
             padding-bottom:5px;
+            width:100%;
         }
 
+        
         .colour{
-            height:100px;
-            width:100px;
-            margin:5px;
+            height: 140px;
+            width: 140px;
+            margin: 5px;
+            float: left;
         }
 
-        .colour-row{
-            float:left;
+        @media screen and (max-width: 979px) {
+            .colour{
+                height: 80px;
+                width: 80px;
+                float: left;
+            }
         }
 
         .red{
@@ -39,6 +47,19 @@
 
         .yellow{
             background-color: yellow;
+        }
+
+        .joker{
+            background-color: black;
+            width: 290px;
+            max-width: 310px;
+        }
+
+        @media screen and (max-width: 979px) {
+            .joker{
+                
+                width: 170px;
+            }
         }
 
     </style>
@@ -60,36 +81,34 @@
     </div>
 
     <div class="controls">
+        <label>Joined Players:</label>
         <ul id="users"></ul>
     </div>
 
-    <div class="controls">
+    <div class="controls hidden-at-start game-buttons">
         <input disabled type="button" id="start" value="Start"/>
         <input disabled type="button" id="next" value="Next Round"/>
     </div>
 
-     <div class="controls">
+    <div class="controls">
         <label id="gameStatus"></label>
     </div>
-
+    <div class="colours hidden-at-start">
+        <div class="colour red"></div>
+        <div class="colour blue"></div>
+        <div style="clear:both;"></div>
+        <div class="colour green"></div>
+        <div class="colour yellow"></div>
+        <div style="clear:both;"></div> 
+        <div class="colour joker"></div>
+        <div style="clear:both;"></div> 
+    </div>
+    
     <div class="controls">
         <label id="serverMessages"></label>
     </div>
 
-
-    <div class="colours">
-        <div class="colour-row"> 
-            <div class="colour red"></div>
-            <div class="colour blue"></div>
-        </div>
-
-        <div class="colour-row"> 
-            <div class="colour green"></div>
-            <div class="colour yellow"></div>
-        </div>
-    </div>
-
-    <div class="controls drinkers">
+    <div class="controls drinkers hidden-at-start">
         <label>Players that Drink:</label>
         <ul id="drinkers"></ul>
     </div>

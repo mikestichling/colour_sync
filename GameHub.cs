@@ -51,8 +51,6 @@ public class GameHub : Hub
 
     public async Task PickColour(string table, string colour)
     {
-        //var move = Moves.Red;
-
         var move = (Moves)Enum.Parse(typeof(Moves), colour.First().ToString().ToUpper() + String.Join("", colour.Skip(1)));
 
         lock(theLock)
@@ -68,9 +66,7 @@ public class GameHub : Hub
 
         Clients.Group(table).gameComplete(game.Tables.Single(t => t.Name == table).JokerLoosers, 
                         game.Tables.Single(t => t.Name == table).Loosers, 
-                        game.Tables.Single(t => t.Name == table).SlowestPlayer
-                        //null
-                        );
+                        game.Tables.Single(t => t.Name == table).SlowestPlayer);
     }
 
     public async Task LeaveTable(string tableName)

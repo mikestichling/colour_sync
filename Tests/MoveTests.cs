@@ -30,5 +30,14 @@ namespace ColourSync.Tests {
 
             Assert.AreEqual(timestamp, move.Timestamp);
         }
+
+        [Test]
+        public void GivenANewMove_WhenGettingTheChosenMove_ItShouldHaveAStringVersion()
+        {
+            var timestamp = DateTime.Now;
+            var move = new Move(Moves.Blue, timestamp, new Player("bob", Guid.NewGuid()));
+
+            Assert.AreEqual("Blue", move.ChosenMoveString);
+        }
     }
 }

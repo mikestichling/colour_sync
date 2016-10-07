@@ -10,18 +10,21 @@ namespace ColourSync.Domain
         {
             this.Name = name;
             this.Id = id;
-            this.Moves = new List<Move>();
+            this.Move = null;
         }
         public string Name {get; set;}
 
         public Guid Id {get; private set;}
 
-        public List<Move> Moves {get; private set;}
+        public Move Move {get; private set;}
 
+        public void ResetMove()
+        {
+            this.Move = null;
+        }
         internal void MakeMove(Moves chosenMove, DateTime timestamp)
         {
-            var move = new Move(chosenMove, timestamp, new Player(this.Name, this.Id));
-            Moves.Add(move);
+            this.Move = new Move(chosenMove, timestamp, new Player(this.Name, this.Id));
         }
     }
 }

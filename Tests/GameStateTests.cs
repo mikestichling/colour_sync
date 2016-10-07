@@ -56,8 +56,8 @@ namespace ColourSync.Tests {
 
             state.MakeMoveForPlayer("abcd", id, Moves.Blue, timestamp);
 
-            Assert.AreEqual(timestamp, state.Tables[0].Players[0].Moves[0].Timestamp);
-            Assert.AreEqual(Moves.Blue, state.Tables[0].Players[0].Moves[0].ChosenMove);
+            Assert.AreEqual(timestamp, state.Tables[0].Players[0].Move.Timestamp);
+            Assert.AreEqual(Moves.Blue, state.Tables[0].Players[0].Move.ChosenMove);
         } 
 
         [Test]

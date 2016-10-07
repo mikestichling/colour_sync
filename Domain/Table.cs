@@ -52,9 +52,10 @@ namespace ColourSync.Domain
 
         public void NextRound()
         {
-            if (Players.Any(p => p.Moves.Count < CurrentRound))
+            if (Players.Any(p => p.Move == null))
                 throw new InvalidOperationException("Cannot advance to the next round if not all players have made their move");
 
+            Players.ForEach(p => p.ResetMove());
             CurrentRound++;
         }
 
@@ -67,7 +68,7 @@ namespace ColourSync.Domain
         {
             get
             {
-                return Players.Count(p => p.Moves.Count < CurrentRound);
+                return Players.Count(p => p.Move == null);
             }
         }
         
@@ -75,7 +76,7 @@ namespace ColourSync.Domain
         {
             get
             {
-                return Players.Select(p => p.Moves[CurrentRound - 1]).ToList();
+                return Players.Select(p => p.Move).ToList();
             }
         }
 
@@ -97,7 +98,12 @@ namespace ColourSync.Domain
 
                 var filtered = ordered.Where(g => g.Count() == mostSelected).ToList();
                 var list = new List<Player>();
-                filtered.ForEach(f => f.OrderBy(o => o.Timestamp).ToList().ForEach(m => list.Add(m.Player))); 
+                //filtered.ForEach(f => f.OrderBy(o => o.Timestamp).ToList().ForEach(m => list.Add(m.Player)));
+
+                foreach(var kvp in filtered)
+                {
+                    list.AddRange(this.Players.Where(p => p.Move.ChosenMove == kvp.Key));
+                }
 
                 return list;
             }
@@ -110,7 +116,7 @@ namespace ColourSync.Domain
                 if (MovesForCurrentRound.Where(m => m.ChosenMove == Enums.Moves.Joker).Count() == 1)
                 {
                     var player = MovesForCurrentRound.Single(m => m.ChosenMove == Enums.Moves.Joker).Player;
-                    return Players.Where(p => p != player).ToList();
+                    return Players.Where(p => p.Id != player.Id).ToList();
                 }
                 else
                 {
