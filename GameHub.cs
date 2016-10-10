@@ -19,24 +19,28 @@ public class GameHub : Hub
 
     public void StartGame(string table)
     {
+        var random = new Random();
+        var config = game.Tables.Single(t => t.Name == table).StartGame(random.Next(0, int.MaxValue));
         
-        game.Tables.Single(t => t.Name == table).StartGame();
-        int count = 0;
-        while(count < 3)
-        {
-            count++;
-            Clients.Group(table).updateTimer(count);
-            Thread.Sleep(1000);
-        }
+        UpdateClient(table);
 
-        Clients.Group(table).startGame();
+        Clients.Group(table).startGame(config);
         Clients.Group(table).updateServerMessage(game.Tables.Single(t => t.Name == table).PlayersNeedingToMove);
     }
 
     public void NextRound(string table)
     {
+        var random = new Random();
+        var config = game.Tables.Single(t => t.Name == table).NextRound(random.Next(0, int.MaxValue));
         
-        game.Tables.Single(t => t.Name == table).NextRound();
+        UpdateClient(table);
+
+        Clients.Group(table).startGame(config);
+        Clients.Group(table).updateServerMessage(game.Tables.Single(t => t.Name == table).PlayersNeedingToMove);
+    }
+
+    private void UpdateClient(string table)
+    {
         int count = 0;
         while(count < 3)
         {
@@ -44,14 +48,11 @@ public class GameHub : Hub
             Clients.Group(table).updateTimer(count);
             Thread.Sleep(1000);
         }
-
-        Clients.Group(table).startGame();
-        Clients.Group(table).updateServerMessage(game.Tables.Single(t => t.Name == table).PlayersNeedingToMove);
     }
 
     public async Task PickColour(string table, string colour)
     {
-        var move = (Moves)Enum.Parse(typeof(Moves), colour.First().ToString().ToUpper() + String.Join("", colour.Skip(1)));
+        var move = (Moves)Enum.Parse(typeof(Moves), colour, ignoreCase: true);
 
         lock(theLock)
         {

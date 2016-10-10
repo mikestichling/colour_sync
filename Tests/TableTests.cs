@@ -77,7 +77,7 @@ namespace ColourSync.Tests {
         public void GivenANewTable_WhenStartingTheGame_ItShouldSetTheRoundToOne()
         {
             var table = new Table("abcd");
-            table.StartGame();
+            table.StartGame(123);
 
             Assert.AreEqual(1, table.CurrentRound);
         }
@@ -86,8 +86,8 @@ namespace ColourSync.Tests {
         public void GivenANewTable_WhenAdvancingToTheNextRound_ItShouldAdvanceTheRoundByOne()
         {
             var table = new Table("abcd");
-            table.StartGame();
-            table.NextRound();
+            table.StartGame(123);
+            table.NextRound(124);
 
             Assert.AreEqual(2, table.CurrentRound);
         }
@@ -98,8 +98,8 @@ namespace ColourSync.Tests {
             var table = new Table("abcd");
             table.AddPlayer(new Player("bob", Guid.NewGuid()));
             table.AddPlayer(new Player("bob2", Guid.NewGuid()));
-            table.StartGame();
-            Assert.That(() => { table.NextRound();}, Throws.InvalidOperationException);
+            table.StartGame(123);
+            Assert.That(() => { table.NextRound(124);}, Throws.InvalidOperationException);
         }
 
         [Test]
@@ -110,8 +110,8 @@ namespace ColourSync.Tests {
             table.AddPlayer(new Player("bob2", Guid.NewGuid()));
             table.Players[0].MakeMove(Moves.Blue, DateTime.Now);
             table.Players[1].MakeMove(Moves.Blue, DateTime.Now);
-            table.StartGame();
-            table.NextRound();
+            table.StartGame(123);
+            table.NextRound(124);
             Assert.AreEqual(2, table.CurrentRound);
         }
 
@@ -122,7 +122,7 @@ namespace ColourSync.Tests {
             table.AddPlayer(new Player("bob", Guid.NewGuid()));
             table.AddPlayer(new Player("bob2", Guid.NewGuid()));
             
-            table.StartGame();
+            table.StartGame(123);
             Assert.AreEqual(2, table.PlayersNeedingToMove);
         }
 
@@ -133,7 +133,7 @@ namespace ColourSync.Tests {
             table.AddPlayer(new Player("bob", Guid.NewGuid()));
             table.AddPlayer(new Player("bob2", Guid.NewGuid()));
             
-            table.StartGame();
+            table.StartGame(123);
 
             table.Players[0].MakeMove(Moves.Blue, DateTime.Now);
             table.Players[1].MakeMove(Moves.Blue, DateTime.Now);
@@ -160,7 +160,7 @@ namespace ColourSync.Tests {
             table.AddPlayer(new Player("Player5", Guid.NewGuid()));
             table.AddPlayer(new Player("Jane", Guid.NewGuid()));
 
-            table.StartGame();
+            table.StartGame(123);
 
             table.Players[0].MakeMove(Moves.Blue, DateTime.Now);
             table.Players[1].MakeMove(Moves.Blue, DateTime.Now);
@@ -183,7 +183,7 @@ namespace ColourSync.Tests {
             table.AddPlayer(new Player("Bob", Guid.NewGuid()));
             table.AddPlayer(new Player("Jane", Guid.NewGuid()));
 
-            table.StartGame();
+            table.StartGame(123);
 
             table.Players[0].MakeMove(Moves.Yellow, DateTime.Now);
             table.Players[1].MakeMove(Moves.Green, DateTime.Now);
@@ -209,7 +209,7 @@ namespace ColourSync.Tests {
             table.AddPlayer(new Player("Bob", Guid.NewGuid()));
             table.AddPlayer(new Player("Jane", Guid.NewGuid()));
 
-            table.StartGame();
+            table.StartGame(123);
 
             table.Players[0].MakeMove(Moves.Yellow, DateTime.Now);
             table.Players[1].MakeMove(Moves.Green, DateTime.Now);
@@ -236,7 +236,7 @@ namespace ColourSync.Tests {
             table.AddPlayer(new Player("Bob", Guid.NewGuid()));
             table.AddPlayer(new Player("Jane", Guid.NewGuid()));
 
-            table.StartGame();
+            table.StartGame(123);
 
             table.Players[0].MakeMove(Moves.Joker, DateTime.Now);
             table.Players[1].MakeMove(Moves.Green, DateTime.Now);
@@ -264,7 +264,7 @@ namespace ColourSync.Tests {
             table.AddPlayer(new Player("Bob", Guid.NewGuid()));
             table.AddPlayer(new Player("Jane", Guid.NewGuid()));
 
-            table.StartGame();
+            table.StartGame(123);
 
             table.Players[0].MakeMove(Moves.Blue, DateTime.Now);
             table.Players[1].MakeMove(Moves.Green, DateTime.Now);
@@ -277,6 +277,71 @@ namespace ColourSync.Tests {
             Assert.AreEqual("John", table.JokerLoosers[0].Name);
             Assert.AreEqual("Bob", table.JokerLoosers[1].Name);
             Assert.AreEqual("Jane", table.JokerLoosers[2].Name);
+        }
+
+        [Test]
+        public void GivenATableWithTwoPlayer_WhenStartingAGame_ItShouldReturnTheConfigurationForThatGame()
+        {
+            var table = new Table("ABCD");
+            table.AddPlayer(new Player("Player1", Guid.NewGuid()));
+            table.AddPlayer(new Player("Player2", Guid.NewGuid()));
+
+            var config = table.StartGame(123);
+
+            Assert.AreEqual(2, config.Colours.Count);
+            Assert.AreEqual("darkred", config.Colours[0]);
+            Assert.AreEqual("deepskyblue", config.Colours[1]);
+        }
+
+        [Test]
+        public void GivenATableWithSixPlayer_WhenStartingAGame_ItShouldReturnTheConfigurationForThatGame()
+        {
+            var table = new Table("ABCD");
+             table.AddPlayer(new Player("Player1", Guid.NewGuid()));
+            table.AddPlayer(new Player("Player2", Guid.NewGuid()));
+            table.AddPlayer(new Player("Player3", Guid.NewGuid()));
+            table.AddPlayer(new Player("John", Guid.NewGuid()));
+            table.AddPlayer(new Player("Bob", Guid.NewGuid()));
+            table.AddPlayer(new Player("Jane", Guid.NewGuid()));
+
+            var config = table.StartGame(123);
+
+            Assert.AreEqual(5, config.Colours.Count);
+            Assert.AreEqual("darkred", config.Colours[0]);
+            Assert.AreEqual("deepskyblue", config.Colours[1]);
+            Assert.AreEqual("teal", config.Colours[2]);
+            Assert.AreEqual("lightcoral", config.Colours[3]);
+            Assert.AreEqual("red", config.Colours[4]);
+        }
+
+        [Test]
+        public void GivenATableWithSixPlayer_WhenAdvancingToTheNextRound_ItShouldReturnTheConfigurationForThatGame()
+        {
+            var table = new Table("ABCD");
+            table.AddPlayer(new Player("Player1", Guid.NewGuid()));
+            table.AddPlayer(new Player("Player2", Guid.NewGuid()));
+            table.AddPlayer(new Player("Player3", Guid.NewGuid()));
+            table.AddPlayer(new Player("John", Guid.NewGuid()));
+            table.AddPlayer(new Player("Bob", Guid.NewGuid()));
+            table.AddPlayer(new Player("Jane", Guid.NewGuid()));
+
+            var config = table.StartGame(123);
+
+            table.Players[0].MakeMove(Moves.Blue, DateTime.Now);
+            table.Players[1].MakeMove(Moves.Green, DateTime.Now);
+            table.Players[2].MakeMove(Moves.Red, DateTime.Now);
+            table.Players[3].MakeMove(Moves.Joker, DateTime.Now);
+            table.Players[4].MakeMove(Moves.Joker, DateTime.Now);
+            table.Players[5].MakeMove(Moves.Joker, DateTime.Now);
+
+            config = table.NextRound(124);
+
+            Assert.AreEqual(5, config.Colours.Count);
+            Assert.AreEqual("magenta", config.Colours[0]);
+            Assert.AreEqual("lightseagreen", config.Colours[1]);
+            Assert.AreEqual("red", config.Colours[2]);
+            Assert.AreEqual("yellow", config.Colours[3]);
+            Assert.AreEqual("deepskyblue", config.Colours[4]);
         }
     }
 }

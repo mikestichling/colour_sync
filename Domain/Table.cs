@@ -2,6 +2,7 @@ using System.Text;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ColourSync.Domain.Enums;
 
 namespace ColourSync.Domain
 {
@@ -45,18 +46,46 @@ namespace ColourSync.Domain
             this.Players.Remove(thisPlayer);
         }
 
-        public void StartGame()
+        public GameConfiguration StartGame(int seed)
         {
             CurrentRound = 1;
+
+            var moves = GetRandomMoves(seed);
+
+            return new GameConfiguration(moves);
         }
 
-        public void NextRound()
+        public GameConfiguration NextRound(int seed)
         {
             if (Players.Any(p => p.Move == null))
                 throw new InvalidOperationException("Cannot advance to the next round if not all players have made their move");
 
             Players.ForEach(p => p.ResetMove());
             CurrentRound++;
+
+            var moves = GetRandomMoves(seed);
+
+            return new GameConfiguration(moves);
+        }
+
+        private List<Moves> GetRandomMoves(int seed)
+        {
+            var random = new Random(seed);
+            var numberOfPlayer = Players.Count() - 1 > 2 ? Players.Count() - 1 : 2;
+            var moves = new List<Moves>();
+            var count = 0;
+            while(count < numberOfPlayer)
+            {
+                var index = random.Next(0, 20);
+                var move = (Moves)index;
+                if (!moves.Contains(move) && move != Moves.Joker)
+                {
+                    moves.Add(move);
+                    count++;
+                }
+            }
+
+            return moves;
         }
 
         public string Name {get; private set;}
@@ -96,10 +125,9 @@ namespace ColourSync.Domain
                 var ordered = colourGroups.OrderByDescending(g => g.Count());
                 var mostSelected = ordered.First().Count();
 
-                var filtered = ordered.Where(g => g.Count() == mostSelected).ToList();
+                var filtered = ordered.Where(g => g.Count() == mostSelected && g.Count() != 1).ToList();
                 var list = new List<Player>();
-                //filtered.ForEach(f => f.OrderBy(o => o.Timestamp).ToList().ForEach(m => list.Add(m.Player)));
-
+                
                 foreach(var kvp in filtered)
                 {
                     list.AddRange(this.Players.Where(p => p.Move.ChosenMove == kvp.Key));

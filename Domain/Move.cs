@@ -22,7 +22,6 @@ namespace ColourSync.Domain
 
         public Moves ChosenMove {get; private set;}
         public DateTime Timestamp {get; private set;}
-
         public Player Player {get; private set;}
     }
 }

@@ -23,10 +23,17 @@ game.client.updateTimer = function (count) {
     document.getElementById("gameStatus").innerHTML = "Starting in " + (4 - count);
 };
 
-game.client.startGame = function(){
+game.client.startGame = function(config){
     document.getElementById("drinkers").innerHTML = "";
     document.getElementById("gameStatus").innerHTML = "Pick colour!";
+    $(".colour").hide();
+   
+    for(var i = 0; i < config.Colours.length; i++)
+    {
+        $("." + config.Colours[i]).show();
+    }
     $(".colours").show();
+    
 };
 
 game.client.gameComplete = function(jokerLoosers, loosers, slowestPlayer){
@@ -56,6 +63,10 @@ game.client.gameComplete = function(jokerLoosers, loosers, slowestPlayer){
         {
             $("#drinkers").append('<li>' + slowestPlayer.Name + ' (slowest) </li>');
         }
+    }
+    else
+    {
+        $("#drinkers").append('<li>' + slowestPlayer.Name + ' (slowest) </li>');
     }
     $("#next").removeAttr("disabled");
 };
