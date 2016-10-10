@@ -343,5 +343,31 @@ namespace ColourSync.Tests {
             Assert.AreEqual("yellow", config.Colours[3]);
             Assert.AreEqual("deepskyblue", config.Colours[4]);
         }
+
+        [Test]
+        public void GivenATableWithFourPlayers_WhenThePlayersHaveMadeTheirMoves_ItShouldContainAListOfMoves()
+        {
+             var table = new Table("ABCD");
+            table.AddPlayer(new Player("Player1", Guid.NewGuid()));
+            table.AddPlayer(new Player("Player2", Guid.NewGuid()));
+            table.AddPlayer(new Player("Player3", Guid.NewGuid()));
+            table.AddPlayer(new Player("Player4", Guid.NewGuid()));
+
+            var config = table.StartGame(123);
+
+            table.Players[0].MakeMove(Moves.Blue, DateTime.Now);
+            table.Players[1].MakeMove(Moves.Blue, DateTime.Now);
+            table.Players[2].MakeMove(Moves.Red, DateTime.Now);
+            table.Players[3].MakeMove(Moves.Green, DateTime.Now);
+
+            Assert.AreEqual(3, table.MoveBreakdowns.Count);
+            Assert.AreEqual("blue", table.MoveBreakdowns[0].Move);
+            Assert.AreEqual("red", table.MoveBreakdowns[1].Move);
+            Assert.AreEqual("green", table.MoveBreakdowns[2].Move);
+
+            Assert.AreEqual(2, table.MoveBreakdowns[0].Players.Count);
+            Assert.AreEqual(1, table.MoveBreakdowns[1].Players.Count);
+            Assert.AreEqual(1, table.MoveBreakdowns[2].Players.Count);
+        }
     }
 }

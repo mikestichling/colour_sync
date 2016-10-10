@@ -153,5 +153,25 @@ namespace ColourSync.Domain
                 
             }
         }
+
+        public List<MoveBreakdown> MoveBreakdowns 
+        {
+            get
+            {
+                var colourGroups = MovesForCurrentRound.GroupBy(m => m.ChosenMove);
+                var ordered = colourGroups.OrderByDescending(g => g.Count());
+
+                var result = new List<MoveBreakdown>();
+
+                var list = new List<Player>();
+                
+                foreach(var kvp in ordered)
+                {
+                    result.Add(new MoveBreakdown(kvp.Key, this.Players.Where(p => p.Move.ChosenMove == kvp.Key).ToList()));
+                }
+
+                return result;
+            }
+        }
     }
 }

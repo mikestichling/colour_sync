@@ -35,82 +35,102 @@
 
         .red{
             background-color: red;
+            color:red;
         }
 
         .blue{
             background-color: blue;
+            color:blue;
         }
 
         .green{
             background-color: green;
+            color:green;
         }
 
         .yellow{
             background-color: yellow;
+            color:yellow;
         }
 
         .goldenrod{
             background-color: goldenrod;
+            color:goldenrod;
         }
         
         .hotpink{
             background-color: hotpink;
+            color:hotpink;
         }
             
         .lawngreen{
             background-color: lawngreen;
+            color:lawngreen;
         }
 
         .lightseagreen{
             background-color: lightseagreen;
+            color:lightseagreen;
         }
         
         .lightslategray{
             background-color: lightslategray;
+            color:lightslategray;
         }
         
         .magenta{
             background-color: magenta;
+            color:magenta;
         }
         
         .orange{
             background-color: orange;
+            color: orange;
         }
 
         .purple{
             background-color: purple;
+            color:purple;
         }
         
         .silver{
             background-color: silver;
+            color:silver;
         }	
         
         .teal{
             background-color: teal;
+            color:teal;
         }
         
         .plum{
             background-color: plum;
+            color:plum;
         }
         
         .lightcoral{
             background-color: lightcoral;
+            color:lightcoral;
         }
         
         .indigo{
             background-color: indigo;
+            color:indigo;
         }
         
         .deepskyblue{
             background-color: deepskyblue;
+            color:deepskyblue;
         }
         
         .darkred{
             background-color: darkred;
+            color:darkred;
         }
         
         .beige{
             background-color: beige;
+            color:beige;
         }
 
         .joker{
@@ -124,6 +144,16 @@
                 
                 width: 170px;
             }
+        }
+
+        .drinker{
+            height: 25px;
+            width: 25px;
+            display: inline;
+        }
+
+        .drinker-label{
+            float:left;
         }
 
     </style>
@@ -160,7 +190,6 @@
     <div class="colours hidden-at-start">
         <div class="colour red"></div>
         <div class="colour blue"></div>
-        <!-- <div style="clear:both;"></div> -->
         <div class="colour green"></div>
         <div class="colour yellow"></div>
         <div class="colour goldenrod"></div>
@@ -179,18 +208,22 @@
         <div class="colour deepskyblue"></div>
         <div class="colour darkred"></div>
         <div class="colour beige"></div>
-        <!-- <div style="clear:both;"></div>  -->
-        <!-- <div class="colour joker"></div> -->
-         
+        <!-- <div class="colour joker"></div> --> 
     </div>
+
     <div style="clear:both;"></div>
+
     <div class="controls">
         <label id="serverMessages"></label>
     </div>
 
+    <div id="colour-breakdown" class="controls drinkers hidden-at-start">
+        
+    </div>
+
     <div class="controls drinkers hidden-at-start">
         <label>Players that Drink:</label>
-        <ul id="drinkers"></ul>
+        <ul id="drinkers-list"></ul>
     </div>
 
     <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.0.min.js"></script>

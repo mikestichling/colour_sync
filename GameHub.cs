@@ -65,7 +65,7 @@ public class GameHub : Hub
             Thread.Sleep(100);
         }
 
-        Clients.Group(table).gameComplete(game.Tables.Single(t => t.Name == table).JokerLoosers, 
+        Clients.Group(table).gameComplete(game.Tables.Single(t => t.Name == table).MoveBreakdowns, 
                         game.Tables.Single(t => t.Name == table).Loosers, 
                         game.Tables.Single(t => t.Name == table).SlowestPlayer);
     }
