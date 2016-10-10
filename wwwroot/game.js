@@ -49,7 +49,7 @@ game.client.gameComplete = function(colourBreakdown, loosers, slowestPlayer){
             var players = "";
             for(var p = 0; p < colourBreakdown[i].Players.length; p++)
             {
-                players = colourBreakdown[i].Players[p].Name + ", ";
+                players = colourBreakdown[i].Players[p].Name + ", " + players;
             }
             $("#colour-breakdown").append('<div class="drinker ' + colourBreakdown[i].Move + '">[ ]</div><label>' + players + '</label>');
         }
