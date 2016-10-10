@@ -71,7 +71,7 @@ namespace ColourSync.Domain
         private List<Moves> GetRandomMoves(int seed)
         {
             var random = new Random(seed);
-            var numberOfPlayer = Players.Count() - 1 > 2 ? Players.Count() - 1 : 2;
+            var numberOfPlayer = Players.Count() - 1 > 4 ? Players.Count() - 1 : 4;
             var moves = new List<Moves>();
             var count = 0;
             while(count < numberOfPlayer)

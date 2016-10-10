@@ -288,9 +288,11 @@ namespace ColourSync.Tests {
 
             var config = table.StartGame(123);
 
-            Assert.AreEqual(2, config.Colours.Count);
+            Assert.AreEqual(4, config.Colours.Count);
             Assert.AreEqual("darkred", config.Colours[0]);
             Assert.AreEqual("deepskyblue", config.Colours[1]);
+            Assert.AreEqual("teal", config.Colours[2]);
+            Assert.AreEqual("lightcoral", config.Colours[3]);
         }
 
         [Test]
